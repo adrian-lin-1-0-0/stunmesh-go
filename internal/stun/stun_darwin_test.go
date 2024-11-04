@@ -29,6 +29,10 @@ func TestStun_New(t *testing.T) {
 	ctx := context.Background()
 
 	s, err := New(ctx, 12222)
+	if err != nil {
+		t.Error(err)
+	}
+
 	s.Start(ctx)
 
 	if err != nil {

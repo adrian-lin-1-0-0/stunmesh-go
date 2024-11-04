@@ -36,7 +36,7 @@ func New(ctx context.Context, port uint16) (*Stun, error) {
 
 	conn := ipv4.NewPacketConn(c)
 
-	handle, err := pcap.OpenLive("eth0", 1600, true, pcap.BlockForever)
+	handle, err := pcap.OpenLive("en0", 1600, true, pcap.BlockForever)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func (s *Stun) Start(ctx context.Context) {
 					buf := make([]byte, PacketSize)
 					packet, err := s.packetSource.NextPacket()
 					if err != nil {
-						continue
+						return
 					}
 					n := copy(buf, packet.Data())
 					s.packetChan <- buf[:n]
