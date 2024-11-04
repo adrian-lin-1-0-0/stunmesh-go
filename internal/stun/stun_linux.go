@@ -4,6 +4,7 @@ package stun
 import (
 	"context"
 	"encoding/binary"
+	"fmt"
 	"net"
 	"sync"
 	"time"
@@ -90,7 +91,7 @@ func (s *Stun) Connect(ctx context.Context, stunAddr string) (string, int, error
 
 	_, err = s.conn.WriteTo(packet, nil, addr)
 	if err != nil {
-		return "", 0, err
+		return "", 0, fmt.Errorf("failed to send STUN packet: %w", err)
 	}
 
 	reply, err := s.Read(ctx)
